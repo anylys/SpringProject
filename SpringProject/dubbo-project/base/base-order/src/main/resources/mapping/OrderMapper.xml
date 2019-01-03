@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anyly.mapper.OrderMapper">
+    <update id="updateOrder" parameterType="com.anyly.model.OrderDO">
+        update T_ORDER set pay_status = 1  where id = #{id}
+    </update>
+    <select id="getOrder" resultType="com.anyly.model.OrderDO" parameterType="Integer">
+      select * from T_ORDER  where id = #{id}
+    </select>
+
+    <select id="allOrder" resultType="com.anyly.model.OrderDO">
+         select * from T_ORDER
+    </select>
+</mapper>

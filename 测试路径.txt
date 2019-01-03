@@ -1,0 +1,14 @@
+需要安装zookeeper
+
+1. springboot多数据源
+http://localhost:8080/user/info
+http://localhost:8080/order/info
+
+2.springboot jta
+http://localhost:8080/index/test1
+http://localhost:8080/index/test2
+
+3 dubbo项目
+http://localhost:8080/index/userInfo/29
+http://localhost:8080/index/orderList
+http://localhost:8080/index/pay/1

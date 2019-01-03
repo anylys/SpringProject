@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anyly.mapper.UserMapper">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO USER
+        (
+            NAME
+        )
+        VALUES
+        (
+            #{name}
+        )
+    </insert>
+    <select id="select" resultType="com.anyly.model.UserDO" parameterType="com.anyly.model.UserDO">
+        select * from user where id = #{id}
+    </select>
+
+    <update id="updateUserMoney" parameterType="com.anyly.model.UserDO">
+        update user set balance = #{balance} where id =#{id}
+    </update>
+</mapper>
