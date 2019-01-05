@@ -18,6 +18,41 @@
             <artifactId>order-interface-impl</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <!-- 发布服务所需要依赖 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.netty</groupId>
+                    <artifactId>netty</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo-container-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <resources>
@@ -27,9 +62,7 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>**/*.properties</include>
-                    <include>**/*.xml</include>
                 </includes>
-
             </resource>
             <!-- com.alibaba.dubbo.container.Main加载spring配置文件的路径 META-INF/spring -->
             <resource>
@@ -42,7 +75,7 @@
                 </includes>
             </resource>
         </resources>
-
+        <!-- 插件 -->
         <plugins>
             <!-- 资源文件拷贝插件 -->
             <plugin>
@@ -64,17 +97,19 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-            <!-- 打包jar文件时，配置manifest文件，加入lib包的jar依赖 -->
+
+            <!-- 打包Fat包 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.0.2</version>
                 <configuration>
+                    <finalName>${project.name}-fat</finalName>
                     <classesDirectory>target/classes/</classesDirectory>
                     <archive>
                         <manifest>
                             <!-- 打包时 MANIFEST.MF文件不记录的时间戳版本 -->
-                            <useUniqueVersions>false</useUniqueVersions>
+                            <useUniqueVersions>true</useUniqueVersions>
                             <!-- 添加Class-Path -->
                             <addClasspath>true</addClasspath>
                             <!-- Class-Path添加前缀 -->
@@ -102,6 +137,35 @@
                                 <!-- 拷贝依赖到lib文件夹 -->
                                 ${project.build.directory}/lib
                             </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 类似SpringBoot打包为一个启动包 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.1</version>
+                <configuration>
+                    <!-- 是否生成缩减的pom文件，默认不配置是true -->
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <!-- 启动类 -->
+                                    <mainClass>com.alibaba.dubbo.container.Main</mainClass>
+                                </transformer>
+                            </transformers>
+                            <finalName>${project.name}-main</finalName>
                         </configuration>
                     </execution>
                 </executions>

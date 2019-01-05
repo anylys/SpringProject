@@ -13,6 +13,8 @@
     <modules>
         <module>api-user</module>
         <module>api-order</module>
+        <module>api-sys</module>
+        <module>api-test</module>
     </modules>
     <dependencies>
         <dependency>

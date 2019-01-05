@@ -16,6 +16,5 @@
         <module>base</module>
         <module>api</module>
         <module>common</module>
-        <module>test-publish-user-service</module>
     </modules>
 </project>

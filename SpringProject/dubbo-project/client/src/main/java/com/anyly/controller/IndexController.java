@@ -4,6 +4,8 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.anyly.service.order.OrderService;
 import com.anyly.service.order.bo.OrderBO;
 
+import com.anyly.service.sys.SysConfigService;
+import com.anyly.service.sys.bo.SysConfigBO;
 import com.anyly.service.user.UserService;
 import com.anyly.service.user.bo.UserBO;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +19,14 @@ import java.util.List;
 @RestController
 @RequestMapping("index")
 public class IndexController {
-    @Reference
+    @Reference(check = false)
     UserService userService;
 
     @Reference(check = false)
     OrderService orderService;
 
+    @Reference(check = false)
+    SysConfigService sysConfigService;
 
     @RequestMapping("userInfo/{id}")
     public Object userInfo(@PathVariable Integer id){
@@ -34,6 +38,12 @@ public class IndexController {
     public Object orderList(){
         List<OrderBO> orderBOS = orderService.allOrder();
         return orderBOS;
+    }
+
+    @RequestMapping("sysList")
+    public Object sysList(){
+        List<SysConfigBO> sysConfigBOList = sysConfigService.select();
+        return sysConfigBOList;
     }
 
     @RequestMapping("pay/{orderId}")

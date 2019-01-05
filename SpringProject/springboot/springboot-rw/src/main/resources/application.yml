@@ -1,3 +1,9 @@
+apollo:
+    bootstrap:
+        enabled: true
+    eagerLoad:
+        enabled: true
+    namespaces: springboot-rw,FX.apollo
 spring:
   http:
     encoding:

@@ -13,8 +13,10 @@
     <modules>
         <module>base-order</module>
         <module>base-user</module>
+        <module>base-sys</module>
     </modules>
-    <dependencies>
+    <!-- 因为考虑到不是每个服务的DAO都是JTA -->
+<!--    <dependencies>
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
@@ -32,7 +34,7 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-        <!-- jta -->
+        &lt;!&ndash; jta &ndash;&gt;
         <dependency>
             <groupId>com.atomikos</groupId>
             <artifactId>transactions-jms</artifactId>
@@ -63,5 +65,5 @@
             <version>1.3</version>
             <scope>compile</scope>
         </dependency>
-    </dependencies>
+    </dependencies>-->
 </project>
